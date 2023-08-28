@@ -4,7 +4,7 @@
 
 ```bash
 git commit -a - m "say_things - some changes"
-git tag v1.0.1
+git tag v1.0.2
 git push
 git push --tags
 
