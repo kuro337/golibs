@@ -1,5 +1,53 @@
 # Share Library among Apps
 
+- Create folder golibs - this is the Repo
+
+- golibs hhas samplefunc folder - samplefunc has
+
+```bash
+go.mod
+
+module github.com/Chinmay337/golibs/samplefunc
+
+go 1.21.0
+
+
+hello.go
+package samplefunc
+
+import "fmt"
+
+func Hello() {
+	fmt.Println("Hello from samplefunc!")
+}
+
+
+Then the repo on github is
+Chinmay337/golibs - samplefunc package , etc.
+
+
+```
+
+To use in different apps -
+
+```go
+// randomapp.go
+
+import (
+	"proper/logging"
+	"proper/webserver"
+
+	"github.com/Chinmay337/golibs/samplefunc"
+)
+
+samplefunc.Hello()
+
+// go mod tidy - to get lib
+
+```
+
+- Git CLI and GH Cli
+
 ```bash
 cd webinterface
 
