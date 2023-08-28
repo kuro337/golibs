@@ -1,6 +1,6 @@
 package httpinterface
 
 type HTTPInterface interface {
-	hello() string
-	test() bool
+	Hello() string
+	Test() bool
 }
