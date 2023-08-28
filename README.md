@@ -44,6 +44,10 @@ samplefunc.Hello()
 
 // go mod tidy - to get lib
 
+// If we update a lib
+
+//   go get -u github.com/Chinmay337/golibs/httpinterface@latest
+//   go get -u github.com/Chinmay337/golibs/samplefunc@latest
 ```
 
 - Git CLI and GH Cli
