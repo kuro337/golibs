@@ -3,8 +3,8 @@
 - Pushing Properly
 
 ```bash
-git commit -a - m "say_things - some changes"
-git tag v1.0.2
+git commit -m "some changes"
+git tag v1.0.4
 git push
 git push --tags
 
@@ -70,38 +70,42 @@ samplefunc.Hello()
 //   go get -u github.com/Chinmay337/golibs/samplefunc@latest
 ```
 
-- Implemening Multiple interfaces
+- Implemening Multiple interfaces using Generics to enforce a Contract
 
 ```go
 
-type Writable interface {
-	Write() string
+package main
+
+import "fmt"
+
+type R interface {
+	Read() bool
+}
+type W interface {
+	Write() bool
+}
+type RW[T any] interface {
+	R
+	W
 }
 
-type Readable interface {
-	Read() string
+type File struct{}
+
+func (f File) Read() bool {
+	return true
 }
 
-type ReadWrite interface {
-	Writeable
-	Readable
+func (f File) Write() bool {
+	return true
 }
 
-type SatisfyIface struct {
-	content string
+func main() {
+	var intSat RW[File] = File{}
+	intSat.Read()
+
+	ints := RW[File](File{})
+	ints.Read()
 }
-
-func (s *SatisfyIface) Read() string {
-	return s.content
-}
-
-func (s *SatisfyIface) Write() string {
-	return s.content
-}
-
-var satisfiesIface ReadWrite = &SatisfyIface{content:"abcdef"}
-
-
 
 
 ```
