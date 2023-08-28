@@ -1,5 +1,14 @@
 # Share Library among Apps
 
+- Pushing Properly
+
+```bash
+git commit -a - m "say_things - some changes"
+git tag v1.0.1
+git push
+git push --tags
+```
+
 - Create folder golibs - this is the Repo
 
 - golibs hhas samplefunc folder - samplefunc has
