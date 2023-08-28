@@ -5,7 +5,7 @@ type HTTPInterface interface {
 	Test() bool
 }
 
-// type SomeInterface interface {
-// 	Method1() string
-// 	Method2() bool
-// }
+type SomeInterface interface {
+	Method1() string
+	Method2() bool
+}

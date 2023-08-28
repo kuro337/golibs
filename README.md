@@ -7,6 +7,17 @@ git commit -a - m "say_things - some changes"
 git tag v1.0.1
 git push
 git push --tags
+
+# In the project-
+# In github releases should have the tags on Right Side
+github.com/Chinmay337/golibs/httpinterface v1.0.1
+
+# Now delete go.mod and go.sum and run go mod tidy for latest deps
+
+
+
+
+
 ```
 
 - Create folder golibs - this is the Repo
