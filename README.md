@@ -50,6 +50,42 @@ samplefunc.Hello()
 //   go get -u github.com/Chinmay337/golibs/samplefunc@latest
 ```
 
+- Implemening Multiple interfaces
+
+```go
+
+type Writable interface {
+	Write() string
+}
+
+type Readable interface {
+	Read() string
+}
+
+type ReadWrite interface {
+	Writeable
+	Readable
+}
+
+type SatisfyIface struct {
+	content string
+}
+
+func (s *SatisfyIface) Read() string {
+	return s.content
+}
+
+func (s *SatisfyIface) Write() string {
+	return s.content
+}
+
+var satisfiesIface ReadWrite = &SatisfyIface{content:"abcdef"}
+
+
+
+
+```
+
 - Git CLI and GH Cli
 
 ```bash
