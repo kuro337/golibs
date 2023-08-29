@@ -273,18 +273,18 @@ func (p *Profiler) Stop() {
 	}
 
 	if p.mem {
-		// Wait for a short duration to capture some memory profile data
-
 		if p.linger {
+			fmt.Printf("App has finished executing.\nProfiler will linger for 5s to collect memory profile data.\nUse NoLinger() to disable this behavior - check GoDoc Info for Profiler.\n")
 			time.Sleep(time.Second * 5)
 		}
 		pprof.WriteHeapProfile(p.memOut)
+		p.printEndMessage()
+
 		p.memOut.Close()
 	}
 }
 
 func (p *Profiler) printHelpMessage() {
-	// logic from the original Help() method...
 	if !p.mem && !p.cpu && !p.trace {
 		return
 	}
@@ -335,6 +335,34 @@ go tool pprof -http=:8080 %s
 go tool pprof -http=:8080 %s
 -----
 `, activeProfileStr, p.cpuFile, p.memFile, p.traceFile, p.cpuFile, p.memFile)
+}
+
+func (p *Profiler) printEndMessage() {
+	fmt.Println("\n<-----")
+	fmt.Println("Profiler has finished collecting data!")
+
+	if p.cpu {
+		fmt.Printf("\n# Viewing CPU Profile\n")
+		fmt.Printf("go tool pprof %s\n", p.cpuFile)
+		fmt.Printf("(pprof) list <FunctionName>\n")
+		fmt.Printf("(pprof) top5\n")
+		fmt.Printf("For Web View: go tool pprof -http=:8080 %s\n", p.cpuFile)
+	}
+
+	if p.mem {
+		fmt.Printf("\n# Viewing Memory Profile\n")
+		fmt.Printf("go tool pprof %s\n", p.memFile)
+		fmt.Printf("(pprof) list <FunctionName>\n")
+		fmt.Printf("(pprof) top10\n")
+		fmt.Printf("For Web View: go tool pprof -http=:8080 %s\n", p.memFile)
+	}
+
+	if p.trace {
+		fmt.Printf("\n# Viewing Trace\n")
+		fmt.Printf("go tool trace %s\n", p.traceFile)
+	}
+
+	fmt.Println("------>\n")
 }
 
 func joinWithCommasAndAnd(items []string) string {

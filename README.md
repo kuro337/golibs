@@ -10,7 +10,7 @@ git push
 git push --tags
 
 # Created macro - will run above commands
-ghpushtags v1.0.6 "GoDoc for Tracing"
+ghpushtags v1.0.7 "Added Method to print usage after Stop() runs."
 
 # View latest tag
 git describe --tags --abbrev=0
