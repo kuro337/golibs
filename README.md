@@ -9,6 +9,13 @@ git tag v1.0.4
 git push
 git push --tags
 
+# Created macro - will run above commands
+ghpushtags v1.0.6 "GoDoc for Tracing"
+
+# View latest tag
+git describe --tags --abbrev=0
+
+
 # In app using
 go clean -cache
 go clean -modcache

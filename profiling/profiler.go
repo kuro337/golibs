@@ -112,13 +112,48 @@ func (p *Profiler) CPU() *Profiler {
 /*
 Trace enables tracing and saves the trace.out file to provided output path to NewProfiler("path").
 
-Example usage:
+-----------------
+
+Example Usage in Application:
 
 	profiling.NewProfiler("profile").Trace().Start()
+
+-----------------
 
 Run the following command to view the memory profile once App has finished running:
 
 	go tool trace profile/trace.out
+
+-----------------
+
+Usage Note:
+
+To add Tracing for Latency insights and additional information - use Tasks and Regions.
+
+Example Usage in Application:
+
+Adding Tasks to capture Latency, GC, and Syscall information for Functions or Goroutines
+
+	// Define a Task for SomeFunc()
+	ctx, task1 := trace.NewTask(context.Background(), "somepkg.SomeFunc")
+	somepkg.SomeFunc()
+	task1.End()
+
+	// Define a Task for OtherFunc()
+	_, task2 := trace.NewTask(context.Background(), "somepkg.OtherFunc")
+	somepkg.OtherFunc()
+	task2.End()
+
+	// Then once app ends - run the following command to view the trace profile
+	go tool trace profile/trace.out
+
+	// Go to the Web UI and select the Tasks tab to view the Latency, GC, and Syscall information for SomeFunc() and OtherFunc()
+
+-----------------
+
+Refer to official docs for package runtime/trace for more information.
+
+https://pkg.go.dev/runtime/trace
 */
 func (p *Profiler) Tracing() *Profiler {
 	p.trace = true
