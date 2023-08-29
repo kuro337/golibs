@@ -71,7 +71,7 @@ func NewProfiler(profileOutputPath string) *Profiler {
 		profileOutputPath: profileOutputPath,
 		linger:            true,
 		helpFlag:          false,
-		traceFile:         "trace.out",
+		traceFile:         fmt.Sprintf("%s/trace.out", profileOutputPath),
 		cpuFile:           fmt.Sprintf("%s/cpu.pprof", profileOutputPath),
 		memFile:           fmt.Sprintf("%s/mem.pprof", profileOutputPath),
 	}
