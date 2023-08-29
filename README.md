@@ -3,10 +3,19 @@
 - Pushing Properly
 
 ```bash
+git add .
 git commit -m "some changes"
 git tag v1.0.4
 git push
 git push --tags
+
+# In app using
+go clean -cache
+go clean -modcache
+go mod vendor
+go mod tidy
+go get -u
+
 
 # In the project-
 # In github releases should have the tags on Right Side
