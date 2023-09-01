@@ -15,6 +15,8 @@ ghpushtags v1.0.7 "Added Method to print usage after Stop() runs."
 # View latest tag
 git describe --tags --abbrev=0
 
+#  Recursive Update in all SubDirs
+go get -u ./...
 
 # In app using
 go clean -cache
@@ -24,15 +26,17 @@ go mod tidy
 go get -u
 
 
-# In the project-
-# In github releases should have the tags on Right Side
-github.com/Chinmay337/golibs/httpinterface v1.0.1
+# Setting a specific Version
+# Get the commit with the hash of the latest commit from Github directly
+go get github.com/Chinmay337/golibs@b948630
 
-# Now delete go.mod and go.sum and run go mod tidy for latest deps
+# Then add the replace statement - so it resolves to that version
+require (
+	github.com/Chinmay337/golibs/profiling v0.0.0-20230829052146-b948630de748
+	github.com/cockroachdb/pebble v0.0.0-20230826001808-0b401ee526b8
+)
 
-
-
-
+replace github.com/Chinmay337/golibs => github.com/Chinmay337/golibs v1.0.8
 
 ```
 
