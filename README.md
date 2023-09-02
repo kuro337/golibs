@@ -10,7 +10,7 @@ git push
 git push --tags
 
 # Created macro - will run above commands
-ghpushtags v1.0.7 "Added Method to print usage after Stop() runs."
+ghpushtags v1.1.0 "Utils WS"
 
 # View latest tag
 git describe --tags --abbrev=0
@@ -28,7 +28,7 @@ go get -u
 
 # Setting a specific Version
 # Get the commit with the hash of the latest commit from Github directly
-go get github.com/Chinmay337/golibs@b948630
+go get github.com/Chinmay337/golibs@ec08fe2
 
 # Then add the replace statement - so it resolves to that version
 require (
@@ -37,6 +37,8 @@ require (
 )
 
 replace github.com/Chinmay337/golibs => github.com/Chinmay337/golibs v1.0.8
+
+go get -u
 
 ```
 

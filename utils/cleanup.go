@@ -7,7 +7,7 @@ import (
 	"syscall"
 )
 
-func waitForExitThenCleanup(f func() error) { // creates pointer to function
+func WaitForExitSignalThenCleanup(f func() error) { // creates pointer to function
 
 	// waitExitThenCleanup(obj.Stop) -> obj is the actual object
 
