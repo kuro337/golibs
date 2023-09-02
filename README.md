@@ -10,7 +10,7 @@ git push
 git push --tags
 
 # Created macro - will run above commands
-ghpushtags v1.1.1 "Subpackage Refactor Utils WS"
+ghpushtags v0.2.1 "Subpackage Refactor Utils WS"
 
 # View latest tag
 git describe --tags --abbrev=0
