@@ -3,14 +3,24 @@
 - Pushing Properly
 
 ```bash
+# Created macro - will run above commands
+ghpushtags v0.2.2 "Added Optimizer for Profile Guided Optimization"
+
+# From App
+go get -u github.com/Chinmay337/golibs@v0.2.1
+
+import (
+	"github.com/Chinmay337/golibs/utils"
+	"github.com/Chinmay337/golibs/profiling"
+)
+
 git add .
 git commit -m "some changes"
 git tag v1.0.4
 git push
 git push --tags
 
-# Created macro - will run above commands
-ghpushtags v0.2.1 "Subpackage Refactor Utils WS"
+
 
 # View latest tag
 git describe --tags --abbrev=0

@@ -3,6 +3,7 @@ package profiling
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"runtime/pprof"
@@ -22,10 +23,11 @@ type Profiler struct {
 	trace    bool
 	helpFlag bool
 
-	linger   bool
-	traceOut *os.File
-	cpuOut   *os.File
-	memOut   *os.File
+	optimizer bool
+	linger    bool
+	traceOut  *os.File
+	cpuOut    *os.File
+	memOut    *os.File
 }
 
 /*
@@ -37,9 +39,9 @@ The Profiler can be initalized at launch at the beginning of the application in 
 
 Example usage:
 
-1. Enabling Memory, CPU , and Tracing Profiling
+1. Enabling Memory, CPU , and Tracing Profiling with Build Optimization
 
-	p := profiling.NewProfiler("outputFolder").Memory().CPU().Tracing().Help().Start()
+	p := profiling.NewProfiler("outputFolder").Tracing().Memory().CPU().Optimize().Help().Start()
 	defer p.Stop()
 
 2. Enabling Only Memory and CPU Profiling
@@ -177,6 +179,28 @@ func (p *Profiler) NoLinger() *Profiler {
 }
 
 /*
+PGO enables Profile Guided Optimization.
+
+https://go.dev/doc/pgo
+
+When enabled - the compiler will use the profiling data to optimize the application for Subsequent builds.
+
+default.pgo should be present at root of main where the binary is built
+If present , go build will optimize subsequent builds using Production data.
+
+Example usage:
+
+	profiling.NewProfiler("profile").Memory().CPU().Tracing().Help().Optimizer().Start()
+	defer p.Stop()
+
+	Use this flag to enable Profile Guided Optimization.
+*/
+func (p *Profiler) Optimize() *Profiler {
+	p.optimizer = true
+	return p
+}
+
+/*
 Help prints a help message to the console with instructions on how to view the profiling data.
 Recommended to use this flag to help users view the profiling data and access profiling data.
 
@@ -270,6 +294,13 @@ func (p *Profiler) Stop() {
 	if p.cpu {
 		pprof.StopCPUProfile()
 		p.cpuOut.Close()
+		if p.optimizer {
+			err := copyFile(p.cpuFile, "default.pgo")
+			if err != nil {
+				log.Printf("Error copying CPU profile to default.pgo: %v", err)
+			}
+
+		}
 	}
 
 	if p.mem {
@@ -278,9 +309,11 @@ func (p *Profiler) Stop() {
 			time.Sleep(time.Second * 5)
 		}
 		pprof.WriteHeapProfile(p.memOut)
-		p.printEndMessage()
 
 		p.memOut.Close()
+	}
+	if p.helpFlag && (p.mem || p.cpu || p.trace) {
+		p.printEndMessage()
 	}
 }
 
@@ -376,6 +409,27 @@ func joinWithCommasAndAnd(items []string) string {
 		return fmt.Sprintf("%s and %s", items[0], items[1])
 	}
 	return fmt.Sprintf("%s, and %s", strings.Join(items[:len(items)-1], ", "), items[len(items)-1])
+}
+
+func copyFile(src, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer sourceFile.Close()
+
+	destFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, sourceFile)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 /*
