@@ -1,13 +1,18 @@
 package utils
 
 import (
+	"context"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 )
 
-func WaitForExitSignalThenCleanup(f func() error) { // creates pointer to function
+type SignalNotifier interface {
+	Notify(c chan<- os.Signal, sig ...os.Signal)
+}
+
+func WaitForExitSignalThenCleanup(f func() error, ctx context.Context) { // creates pointer to function
 
 	// waitExitThenCleanup(obj.Stop) -> obj is the actual object
 

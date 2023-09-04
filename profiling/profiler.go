@@ -411,6 +411,7 @@ func joinWithCommasAndAnd(items []string) string {
 	return fmt.Sprintf("%s, and %s", strings.Join(items[:len(items)-1], ", "), items[len(items)-1])
 }
 
+// Usage : copyFile("src.txt", "dst.txt")
 func copyFile(src, dst string) error {
 	sourceFile, err := os.Open(src)
 	if err != nil {

@@ -1,179 +1,49 @@
-# Share Library among Apps
-
-- Pushing Properly
-
-```bash
-# Created macro - will run above commands
-ghpushtags v0.2.2 "Added Optimizer for Profile Guided Optimization"
-
-# From App
-go get -u github.com/Chinmay337/golibs@v0.2.1
-
-import (
-	"github.com/Chinmay337/golibs/utils"
-	"github.com/Chinmay337/golibs/profiling"
-)
-
-git add .
-git commit -m "some changes"
-git tag v1.0.4
-git push
-git push --tags
-
-
-
-# View latest tag
-git describe --tags --abbrev=0
-
-#  Recursive Update in all SubDirs
-go get -u ./...
-
-# In app using
-go clean -cache
-go clean -modcache
-go mod vendor
-go mod tidy
-go get -u
-
-
-# Setting a specific Version
-# Get the commit with the hash of the latest commit from Github directly
-go get github.com/Chinmay337/golibs@1739bd0
-
-# Then add the replace statement - so it resolves to that version
-require (
-	github.com/Chinmay337/golibs/profiling v0.0.0-20230829052146-b948630de748
-	github.com/cockroachdb/pebble v0.0.0-20230826001808-0b401ee526b8
-)
-
-replace github.com/Chinmay337/golibs => github.com/Chinmay337/golibs v1.0.8
-
-go get -u
-
-
+```
+ ██████╗  ██████╗ ██╗     ██╗██████╗ ███████╗
+██╔════╝ ██╔═══██╗██║     ██║██╔══██╗██╔════╝
+██║  ███╗██║   ██║██║     ██║██████╔╝███████╗
+██║   ██║██║   ██║██║     ██║██╔══██╗╚════██║
+╚██████╔╝╚██████╔╝███████╗██║██████╔╝███████║
+ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═════╝ ╚══════╝
 ```
 
-- Create folder golibs - this is the Repo
+# utility libraries for go
 
-- golibs hhas samplefunc folder - samplefunc has
+- `github.com/Chinmay337/golibs/profiling`
 
-```bash
-go.mod
-
-module github.com/Chinmay337/golibs/samplefunc
-
-go 1.21.0
-
-
-hello.go
-package samplefunc
-
-import "fmt"
-
-func Hello() {
-	fmt.Println("Hello from samplefunc!")
-}
-
-
-Then the repo on github is
-Chinmay337/golibs - samplefunc package , etc.
-
-
-```
-
-To use in different apps -
+  - Profiler to instrument and gather perf metrics from applications
+  - Interface that uses `runtime/pprof` and `gotrace` to gather metrics
+  - Will set up `PGO` - Profile Guided Optimization for Go Applications on subsequent builds.
 
 ```go
-// randomapp.go
-
-import (
-	"proper/logging"
-	"proper/webserver"
-
-	"github.com/Chinmay337/golibs/samplefunc"
-)
-
-samplefunc.Hello()
-
-// go mod tidy - to get lib
-
-// If we update a lib
-
-//   go get -u github.com/Chinmay337/golibs/httpinterface@latest
-//   go get -u github.com/Chinmay337/golibs/samplefunc@latest
-```
-
-- Implemening Multiple interfaces using Generics to enforce a Contract
-
-```go
-
-package main
-
-import "fmt"
-
-type R interface {
-	Read() bool
-}
-type W interface {
-	Write() bool
-}
-type RW[T any] interface {
-	R
-	W
-}
-
-type File struct{}
-
-func (f File) Read() bool {
-	return true
-}
-
-func (f File) Write() bool {
-	return true
-}
+import "github.com/Chinmay337/golibs/profiling"
 
 func main() {
-	var intSat RW[File] = File{}
-	intSat.Read()
 
-	ints := RW[File](File{})
-	ints.Read()
+	p := profiling.NewProfiler("outputFolder").
+			 Tracing().Memory().CPU().Optimize().
+			 Help().Start()
+
+	defer p.Stop()
+
+	... // rest of the app
 }
-
-
 ```
 
-- Git CLI and GH Cli
+- `github.com/Chinmay337/golibs/websockets`
 
-```bash
-cd webinterface
+  - Opinionated Websockets server implementation using `gorilla/websockets`
+  - Provides default routes to echo and broadcast messages , keep track of connections , and ability to easily add more functionality/routes.
 
-gh auth login
+```go
+import "github.com/Chinmay337/golibs/websockets"
 
-gh repo create go-libs --public
+func main() {
 
-git remote add origin git@github.com:Chinmay337/go-libs.git
+		wsServer := server.NewWsServer("8080").EnableAll().Start()
 
-git push origin main
-
-
-# Creating alias file for zsh
-touch ~/alias-config.sh
-
-ghcreate go-libs
-l
-gs
-
-# Add to ~/.zshrc
-source ~/alias-config.sh
-
-# Reload
-source ~/.zshrc  # For Zsh
-
-# Usage
-ghcreate go-libs # Creates repo
-
-# Deleting Repo
-gh auth refresh -h github.com -s delete_repo
-gh repo delete testcli
+}
 ```
+
+- `github.com/Chinmay337/golibs/utils`
+  - Common utilities such as for copying files
