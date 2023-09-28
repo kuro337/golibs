@@ -7,11 +7,11 @@
 ghpushtags v0.2.3 "Websockets Upgrades , Profile Guided Optimization"
 
 # From App
-go get -u github.com/Chinmay337/golibs@v0.2.1
+go get -u github.com/kuro337/golibs@v0.2.1
 
 import (
-	"github.com/Chinmay337/golibs/utils"
-	"github.com/Chinmay337/golibs/profiling"
+	"github.com/kuro337/golibs/utils"
+	"github.com/kuro337/golibs/profiling"
 )
 
 git add .
@@ -38,15 +38,15 @@ go get -u
 
 # Setting a specific Version
 # Get the commit with the hash of the latest commit from Github directly
-go get github.com/Chinmay337/golibs@1739bd0
+go get github.com/kuro337/golibs@1739bd0
 
 # Then add the replace statement - so it resolves to that version
 require (
-	github.com/Chinmay337/golibs/profiling v0.0.0-20230829052146-b948630de748
+	github.com/kuro337/golibs/profiling v0.0.0-20230829052146-b948630de748
 	github.com/cockroachdb/pebble v0.0.0-20230826001808-0b401ee526b8
 )
 
-replace github.com/Chinmay337/golibs => github.com/Chinmay337/golibs v1.0.8
+replace github.com/kuro337/golibs => github.com/kuro337/golibs v1.0.8
 
 go get -u
 
@@ -60,7 +60,7 @@ go get -u
 ```bash
 go.mod
 
-module github.com/Chinmay337/golibs/samplefunc
+module github.com/kuro337/golibs/samplefunc
 
 go 1.21.0
 
@@ -76,7 +76,7 @@ func Hello() {
 
 
 Then the repo on github is
-Chinmay337/golibs - samplefunc package , etc.
+kuro337/golibs - samplefunc package , etc.
 
 
 ```
@@ -90,7 +90,7 @@ import (
 	"proper/logging"
 	"proper/webserver"
 
-	"github.com/Chinmay337/golibs/samplefunc"
+	"github.com/kuro337/golibs/samplefunc"
 )
 
 samplefunc.Hello()
@@ -99,8 +99,8 @@ samplefunc.Hello()
 
 // If we update a lib
 
-//   go get -u github.com/Chinmay337/golibs/httpinterface@latest
-//   go get -u github.com/Chinmay337/golibs/samplefunc@latest
+//   go get -u github.com/kuro337/golibs/httpinterface@latest
+//   go get -u github.com/kuro337/golibs/samplefunc@latest
 ```
 
 - Implemening Multiple interfaces using Generics to enforce a Contract
@@ -152,7 +152,7 @@ gh auth login
 
 gh repo create go-libs --public
 
-git remote add origin git@github.com:Chinmay337/go-libs.git
+git remote add origin git@github.com:kuro337/go-libs.git
 
 git push origin main
 
