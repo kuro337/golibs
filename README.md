@@ -9,7 +9,7 @@
 
 # utility libraries for go
 
-- `github.com/Chinmay337/golibs/profiling`
+- `github.com/kuro337/golibs/profiling`
 
   - Profiler to instrument and gather perf metrics from applications
   - Interface that uses `runtime/pprof` and `gotrace` to gather metrics
