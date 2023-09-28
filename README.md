@@ -16,7 +16,7 @@
   - Will set up `PGO` - Profile Guided Optimization for Go Applications on subsequent builds.
 
 ```go
-import "github.com/Chinmay337/golibs/profiling"
+import "github.com/kuro337/golibs/profiling"
 
 func main() {
 
