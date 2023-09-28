@@ -30,13 +30,13 @@ func main() {
 }
 ```
 
-- `github.com/Chinmay337/golibs/websockets`
+- `github.com/kuro337/golibs/websockets`
 
   - Opinionated Websockets server implementation using `gorilla/websockets`
   - Provides default routes to echo and broadcast messages , keep track of connections , and ability to easily add more functionality/routes.
 
 ```go
-import "github.com/Chinmay337/golibs/websockets"
+import "github.com/kuro337/golibs/websockets"
 
 func main() {
 
@@ -45,5 +45,5 @@ func main() {
 }
 ```
 
-- `github.com/Chinmay337/golibs/utils`
+- `github.com/kuro337/golibs/utils`
   - Common utilities such as for copying files
