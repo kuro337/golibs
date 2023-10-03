@@ -1,4 +1,4 @@
-module github.com/Chinmay337/golibs
+module github.com/kuro337/golibs
 
 go 1.21.0
 
